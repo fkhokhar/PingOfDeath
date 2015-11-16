@@ -1,5 +1,7 @@
 package com.utexas.cs371m.fahad.pingofdeath;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.firebase.client.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     Firebase fb;
+    Activity currentActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         fb = new Firebase("https://pingofdeath.firebaseio.com/");
-        fb.child("rooms").child("room1").child("numPlayers").setValue(0);
+        //fb.child("rooms").child("room1").child("numPlayers").setValue(0); // comment this line when checking 2nd player
     }
 
     public void startGameClicked(View view){
@@ -39,22 +42,36 @@ public class MainActivity extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println(snapshot.getValue());
 
                 if(((Long) snapshot.getValue() < 2L)){
                     Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/numPlayers");
                     ref.setValue((Long) snapshot.getValue() + 1L);
+
+                    System.out.println(snapshot.getValue()); // for debugging
 
                     EditText field = (EditText) findViewById(R.id.editText);
                     String playerName = field.getText().toString();
 
                     Firebase playerRef = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/" + playerName);
 
-                    User player = new User(false);
+                    User player = new User(playerName, false);
 
                     playerRef.setValue(player);
 
-                    /* add logic for waiting on 2nd player here */
+                    Intent myIntent;
+
+                    if(((Long) snapshot.getValue() == 1L)){ //2nd player's entry logic
+                        myIntent = new Intent(getApplicationContext(), Battle.class);
+                    } else { //1st player's entry logic
+                        myIntent = new Intent(getApplicationContext(), Waiting.class);
+                    }
+
+                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    myIntent.putExtra("value", player);
+                    getApplicationContext().startActivity(myIntent);
+
+                } else {
+                    /* room is full -- do nothing */
                 }
             }
             @Override
