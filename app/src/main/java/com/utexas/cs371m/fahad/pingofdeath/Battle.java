@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 public class Battle extends AppCompatActivity {
 
     User thisUser;
@@ -22,6 +27,42 @@ public class Battle extends AppCompatActivity {
     }
 
     public void pressedPing(View view){
-        /* Get the other user's object */
+
+        /* set own ping to true */
+
+        Firebase temp = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/users/"
+                + thisUser.getUsername() + "/successfullyPinged");
+
+        temp.setValue(true);
+
+        /* check who won */
+
+        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/users/");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("There are " + snapshot.getChildrenCount() + " blog posts");
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    User temp = postSnapshot.getValue(User.class);
+                    System.out.println(temp.getUsername() + " " + temp.getSuccessfullyPinged());
+
+                    /* Get the other user's object */
+
+                    if(!temp.getUsername().equals(thisUser.getUsername())){
+                        User opponent = temp;
+                        //System.out.println(opponent.getUsername() + " " + opponent.getSuccessfullyPinged());
+
+                        /* Decide the winner */
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
     }
 }

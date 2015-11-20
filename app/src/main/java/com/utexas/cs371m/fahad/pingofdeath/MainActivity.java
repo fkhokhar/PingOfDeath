@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     EditText field = (EditText) findViewById(R.id.editText);
                     String playerName = field.getText().toString();
 
-                    Firebase playerRef = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/" + playerName);
+                    Firebase playerRef = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/users/" + playerName);
 
                     User player = new User(playerName, false);
 
