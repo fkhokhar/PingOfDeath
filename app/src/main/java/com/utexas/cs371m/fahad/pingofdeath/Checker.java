@@ -59,20 +59,20 @@ public class Checker implements Runnable {
                     } else {  //the opponent won
                         Toast.makeText(myBattle, "YOU LOST!!!", Toast.LENGTH_SHORT).show();
 
-                        /* decrease the player count */
-                        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
-                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
-                                ref.setValue((Long) dataSnapshot.getValue() - 1L);
-                            }
-
-                            @Override
-                            public void onCancelled(FirebaseError firebaseError) {
-
-                            }
-                        });
+//                        /* decrease the player count *//*
+//                        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
+//                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
+//                                ref.setValue((Long) dataSnapshot.getValue() - 1L);
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(FirebaseError firebaseError) {
+//
+//                            }
+//                        });*/
                     }
 
                     myBattle.finish();
