@@ -11,6 +11,8 @@ import com.firebase.client.ValueEventListener;
 
 public class Waiting extends AppCompatActivity {
 
+    static final int REQ_CODE = 123;  // The request code
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +34,19 @@ public class Waiting extends AppCompatActivity {
                     Intent myIntent = new Intent(getApplicationContext(), Battle.class);
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     myIntent.putExtra("value", thisUser);
-                    getApplicationContext().startActivity(myIntent);
+                    startActivity(myIntent);
+                    finish();
                 }
+
+
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
             }
+
+
         });
 
     }

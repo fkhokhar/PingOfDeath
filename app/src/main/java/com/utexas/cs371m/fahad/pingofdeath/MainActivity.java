@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         fb = new Firebase("https://pingofdeath.firebaseio.com/");
-        //fb.child("rooms").child("room1").child("numPlayers").setValue(0); // comment this line when checking 2nd player
     }
 
     public void startGameClicked(View view){
