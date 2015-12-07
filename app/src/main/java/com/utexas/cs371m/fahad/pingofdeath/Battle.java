@@ -59,10 +59,10 @@ public class Battle extends AppCompatActivity {
 
         /* set own ping to true */
 
-        Firebase temp = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/users/"
+        Firebase temp = new Firebase("https://pingofdeath.firebaseio.com/rooms/" + thisUser.getRoomNumber() + "/users/"
                 + thisUser.getUsername());
 
-        User player = new User(thisUser.getUsername(), true);
+        User player = new User(thisUser.getUsername(), true, thisUser.getRoomNumber());
         temp.setValue(player);
     }
 }

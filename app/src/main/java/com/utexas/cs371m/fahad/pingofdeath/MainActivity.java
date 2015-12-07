@@ -36,24 +36,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGameClickedHelper(){
-        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/numPlayers");
+        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
                 if(((Long) snapshot.getValue() < 2L)){
-                    Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/numPlayers");
+                    Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
                     ref.setValue((Long) snapshot.getValue() + 1L);
 
                     System.out.println(snapshot.getValue()); // for debugging
 
                     EditText field = (EditText) findViewById(R.id.editText);
                     String playerName = field.getText().toString();
+                    String roomNumber = "room1";
 
                     Firebase playerRef = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/users/" + playerName);
 
-                    User player = new User(playerName, false);
+                    User player = new User(playerName, false, roomNumber);
 
                     playerRef.setValue(player);
 
@@ -69,8 +70,38 @@ public class MainActivity extends AppCompatActivity {
                     myIntent.putExtra("value", player);
                     getApplicationContext().startActivity(myIntent);
 
+                } else if((Long) snapshot.getValue() < 4L && (Long) snapshot.getValue() >= 2L) {
+                    System.out.println("I am the third player");
+
+                    Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
+                    ref.setValue((Long) snapshot.getValue() + 1L);
+
+                    System.out.println(snapshot.getValue()); // for debugging
+
+                    EditText field = (EditText) findViewById(R.id.editText);
+                    String playerName = field.getText().toString();
+                    String roomNumber = "room2";
+
+                    Firebase playerRef = new Firebase("https://pingofdeath.firebaseio.com/rooms/room2/users/" + playerName);
+
+                    User player = new User(playerName, false, roomNumber);
+
+                    playerRef.setValue(player);
+
+                    Intent myIntent;
+
+                    if(((Long) snapshot.getValue() == 3L)){ //4th player's entry logic
+                        myIntent = new Intent(getApplicationContext(), Battle.class);
+                    } else { //1st player's entry logic
+                        myIntent = new Intent(getApplicationContext(), Waiting.class);
+                    }
+
+                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    myIntent.putExtra("value", player);
+                    getApplicationContext().startActivity(myIntent);
+
                 } else {
-                    /* room is full -- do nothing */
+                    /* rooms are full -- do nothing */
                 }
             }
             @Override

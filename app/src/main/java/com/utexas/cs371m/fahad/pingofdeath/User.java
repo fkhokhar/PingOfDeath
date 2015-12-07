@@ -12,12 +12,14 @@ import java.io.Serializable;
 public class User  implements Serializable {
     private String username;
     private boolean succesfullyPinged;
+    private String roomNumber;
 
     public User() {}
 
-    public User(String username, boolean succesfullyPinged) {
+    public User(String username, boolean succesfullyPinged, String roomNumber) {
         this.username = username;
         this.succesfullyPinged = succesfullyPinged;
+        this.roomNumber = roomNumber;
     }
 
     public String getUsername(){
@@ -26,5 +28,9 @@ public class User  implements Serializable {
 
     public boolean getSuccessfullyPinged() {
         return succesfullyPinged;
+    }
+
+    public String getRoomNumber(){
+        return roomNumber;
     }
 }

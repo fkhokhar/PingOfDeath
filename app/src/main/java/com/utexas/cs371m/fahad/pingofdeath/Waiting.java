@@ -23,14 +23,14 @@ public class Waiting extends AppCompatActivity {
 
         /* add logic for waiting on 2nd player here */
 
-        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/numPlayers");
+        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println("Current number of players: " + dataSnapshot.getValue()); // for debugging
 
-                if(((Long) dataSnapshot.getValue() == 2L)){
+                if(((Long) dataSnapshot.getValue() == 2L || (Long) dataSnapshot.getValue() == 4L)){
                     Intent myIntent = new Intent(getApplicationContext(), Battle.class);
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     myIntent.putExtra("value", thisUser);

@@ -30,7 +30,8 @@ public class Checker implements Runnable {
 
             /* Check the winner */
 
-            Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/users/");
+            Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/"
+                    + myBattle.thisUser.getRoomNumber() +"/users/");
 
             ref.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -45,9 +46,11 @@ public class Checker implements Runnable {
 
                     String name = (String) snapshot.child("username").getValue();
                     Boolean successfullyPinged =  (Boolean) snapshot.child("successfullyPinged").getValue();
-                    User temp = new User(name, successfullyPinged);
+                    String roomNumber = (String) snapshot.child("roomNumber").getValue();
+                    User temp = new User(name, successfullyPinged, roomNumber);
 
-                    System.out.println(temp.getUsername() + " " + temp.getSuccessfullyPinged());
+                    System.out.println(temp.getUsername() + " " +
+                            temp.getSuccessfullyPinged() + " " + temp.getRoomNumber());
 
                     /* Decide the winner */
 
@@ -57,11 +60,11 @@ public class Checker implements Runnable {
                         Toast.makeText(myBattle, "YOU LOST!!!", Toast.LENGTH_SHORT).show();
 
                         /* decrease the player count */
-                        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/numPlayers");
+                        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
                         ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/room1/numPlayers");
+                                Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
                                 ref.setValue((Long) dataSnapshot.getValue() - 1L);
                             }
 
