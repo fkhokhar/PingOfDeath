@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Button;
+import android.widget.AbsoluteLayout;
+import android.util.DisplayMetrics;
+import java.util.Random;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -40,6 +44,20 @@ public class Battle extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         //System.out.println("I'm in the battle class!");
+
+        Button button = (Button)findViewById(R.id.button2);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int width = displaymetrics.widthPixels;
+        int height = displaymetrics.heightPixels;
+
+        Random rand = new Random();
+
+        int randx = rand.nextInt(width/2);
+        int randy = rand.nextInt(height/2);
+        button.setX(randx);
+        button.setY(randy);
 
         Intent intent = getIntent();
         thisUser = (User) intent.getSerializableExtra("value");
