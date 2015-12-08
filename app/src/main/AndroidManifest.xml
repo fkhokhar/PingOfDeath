@@ -17,11 +17,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
         </activity>
         <activity android:name=".Waiting" >
         </activity>
         <activity android:name=".Battle" >
+        </activity>
+        <activity android:name=".FinalBattle" >
+        </activity>
+        <activity android:name=".FinalWaiting" >
         </activity>
     </application>
 

@@ -1,6 +1,7 @@
 package com.utexas.cs371m.fahad.pingofdeath;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +14,12 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.Serializable;
 
-    Firebase fb;
-    Activity currentActivity;
+public class MainActivity extends AppCompatActivity implements Serializable{
+
+    public Firebase fb;
+    public Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Firebase.setAndroidContext(this);
 
+        context = getApplicationContext();
         fb = new Firebase("https://pingofdeath.firebaseio.com/");
     }
 

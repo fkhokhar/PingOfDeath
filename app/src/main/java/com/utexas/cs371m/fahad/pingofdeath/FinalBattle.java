@@ -1,6 +1,5 @@
 package com.utexas.cs371m.fahad.pingofdeath;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +26,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Battle extends AppCompatActivity {
+public class FinalBattle extends AppCompatActivity {
 
     public User thisUser;
     public Handler handler;
@@ -36,8 +35,7 @@ public class Battle extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_battle);
-        Firebase.setAndroidContext(this);
+        setContentView(R.layout.activity_final_round);
 
         //System.out.println("I'm in the battle class!");
 
@@ -46,7 +44,7 @@ public class Battle extends AppCompatActivity {
 
         /* spawn a thread that periodically checks if a user has pinged their opponent or not */
         handler = new Handler();
-        r = new Checker(this);
+        r = new FinalChecker(this);
         handler.postDelayed(r, 100);
     }
 
@@ -54,14 +52,13 @@ public class Battle extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         handler.removeCallbacks(r);
-
     }
 
     public void pressedPing(View view){
 
         /* set own ping to true */
 
-        Firebase temp = new Firebase("https://pingofdeath.firebaseio.com/rooms/" + thisUser.getRoomNumber() + "/users/"
+        Firebase temp = new Firebase("https://pingofdeath.firebaseio.com/rooms/finalRound/users/"
                 + thisUser.getUsername());
 
         User player = new User(thisUser.getUsername(), true, thisUser.getRoomNumber());
