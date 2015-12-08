@@ -43,8 +43,6 @@ public class Battle extends AppCompatActivity {
         setContentView(R.layout.activity_battle);
         Firebase.setAndroidContext(this);
 
-        //System.out.println("I'm in the battle class!");
-
         Button button = (Button)findViewById(R.id.button2);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -65,7 +63,7 @@ public class Battle extends AppCompatActivity {
         /* spawn a thread that periodically checks if a user has pinged their opponent or not */
         handler = new Handler();
         r = new Checker(this);
-        handler.postDelayed(r, 100);
+        handler.postDelayed(r, 500);
     }
 
     @Override

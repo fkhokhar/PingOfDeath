@@ -79,7 +79,7 @@ public class Checker extends AppCompatActivity implements Runnable {
 
                                 Intent myIntent;
 
-                                if(((Long) snapshot.getValue() == 5L)){ //2nd player's entry logic for final round
+                                if (((Long) snapshot.getValue() == 5L)) { //2nd player's entry logic for final round
                                     myIntent = new Intent(myBattle.getApplicationContext(), FinalBattle.class);
                                 } else { //1st player's entry logic for final round
                                     myIntent = new Intent(myBattle.getApplicationContext(), FinalWaiting.class);
@@ -87,8 +87,10 @@ public class Checker extends AppCompatActivity implements Runnable {
 
                                 myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 myIntent.putExtra("value", myBattle.thisUser);
+                                myBattle.handler.removeCallbacks(myBattle.r);
                                 myBattle.startActivity(myIntent);
                             }
+
                             @Override
                             public void onCancelled(FirebaseError firebaseError) {
                                 System.out.println("The read failed: " + firebaseError.getMessage());
@@ -98,22 +100,8 @@ public class Checker extends AppCompatActivity implements Runnable {
 
                     } else {  //the opponent won
                         Toast.makeText(myBattle, "YOU LOST!!!", Toast.LENGTH_SHORT).show();
+                        myBattle.handler.removeCallbacks(myBattle.r);
                         myBattle.finish();
-
-//                        /* decrease the player count */
-//                        Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
-//                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
-//                                ref.setValue((Long) dataSnapshot.getValue() - 1L);
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(FirebaseError firebaseError) {
-//
-//                            }
-//                        });
                     }
                 }
 
@@ -134,7 +122,7 @@ public class Checker extends AppCompatActivity implements Runnable {
 
             });
 
-            this.myBattle.handler.postDelayed(this, 100);
+            this.myBattle.handler.postDelayed(this, 500);
 
         } catch(Resources.NotFoundException e){
             Log.d("Updater", "Things not initialized yet!");

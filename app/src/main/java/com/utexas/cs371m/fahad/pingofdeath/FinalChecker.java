@@ -77,6 +77,8 @@ public class FinalChecker extends AppCompatActivity implements Runnable {
                         TextView et = (TextView) myBattle.findViewById(R.id.textView3);
                         et.setText("YOU LOST THE FINAL ROUND!!!!!!!");
                     }
+
+                    myBattle.handler.removeCallbacks(myBattle.r);
                 }
 
                 @Override
@@ -96,7 +98,7 @@ public class FinalChecker extends AppCompatActivity implements Runnable {
 
             });
 
-            this.myBattle.handler.postDelayed(this, 100);
+            this.myBattle.handler.postDelayed(this, 500);
 
         } catch(Resources.NotFoundException e){
             Log.d("Updater", "Things not initialized yet!");

@@ -45,7 +45,7 @@ public class FinalBattle extends AppCompatActivity {
         /* spawn a thread that periodically checks if a user has pinged their opponent or not */
         handler = new Handler();
         r = new FinalChecker(this);
-        handler.postDelayed(r, 100);
+        handler.postDelayed(r, 500);
     }
 
     @Override

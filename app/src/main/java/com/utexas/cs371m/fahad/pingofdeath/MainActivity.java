@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
         if(field.getText().toString().length() > 0){
             startGameClickedHelper();
+        } else{
+            Toast.makeText(context, "Cannot start game without a name!!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
                 } else {
                     /* rooms are full -- do nothing */
+                    Toast.makeText(context, "No more rooms available! Wait till the next round!!!", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override

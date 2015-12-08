@@ -21,6 +21,7 @@ public class FinalWaiting extends AppCompatActivity {
 
         /* add logic for waiting on 2nd player here */
 
+        Firebase.setAndroidContext(this);
         Firebase ref = new Firebase("https://pingofdeath.firebaseio.com/rooms/numPlayers");
 
         ref.addValueEventListener(new ValueEventListener() {
